@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImobiPrime Academy | Elite Real Estate</title>
+    <!-- Favicon: Gold Rectangle with "IP" -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAzMCI+PHJlY3Qgd2lkdGg9IjIwIiBoZWlnaHQ9IjMwIiByeD0iMiIgZmlsbD0iI0ZGRDcwMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMxNDE0MTQiPklQPC90ZXh0Pjwvc3ZnPg==">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
@@ -33,28 +35,29 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Custom transitions */
-        .view-transition {
-            transition: opacity 0.3s ease-in-out;
-        }
+        /* --- Module Card Styles --- */
         
-        /* Locked card hover */
+        /* LOCKED: Grayscale, No Scale, No Border */
         .card-locked {
-            filter: grayscale(100%) brightness(0.5);
-            transition: all 0.3s ease;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+            cursor: not-allowed;
         }
         .card-locked:hover {
-            filter: grayscale(0%) brightness(1);
+            filter: grayscale(0%);
+            opacity: 1;
         }
         
-        /* Unlocked card hover */
+        /* UNLOCKED: Color, Scale, Gold Border */
         .card-unlocked {
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         .card-unlocked:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
             outline: 2px solid #FFD700;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
             z-index: 10;
         }
 
@@ -70,11 +73,11 @@
         <div class="w-full max-w-md bg-netflix-dark/80 backdrop-blur-md p-10 rounded-lg shadow-2xl border border-white/5">
             <div class="flex justify-center mb-8">
                 <div class="flex items-center gap-2">
-                    <div class="flex items-center justify-center bg-gold rounded-sm h-8 aspect-[2/3] px-1">
-                        <span class="text-black font-black text-[10px] leading-none">IP</span>
+                    <div class="flex items-center justify-center bg-gold rounded-sm h-10 aspect-[2/3] px-1">
+                        <span class="text-black font-black text-xs leading-none">IP</span>
                     </div>
                     <span class="font-display font-bold text-2xl tracking-tighter text-white">
-                        Imobi<span class="text-gold">Prime</span>
+                        ImobiPrime
                     </span>
                 </div>
             </div>
@@ -94,114 +97,116 @@
     </div>
 
     <!-- DASHBOARD VIEW -->
-    <div id="dashboard-view" class="hidden min-h-fit bg-netflix-black pb-0 mb-0">
-        <!-- Navbar -->
-        <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 px-4 md:px-12 h-16 flex items-center justify-between bg-black border-b border-white/5">
-            <div class="flex items-center gap-8">
-                <div class="flex items-center gap-2">
-                    <div class="flex items-center justify-center bg-gold rounded-sm h-8 aspect-[2/3] px-1">
-                        <span class="text-black font-black text-[10px] leading-none">IP</span>
-                    </div>
-                    <span class="font-display font-bold text-2xl tracking-tighter text-white">
-                        Imobi<span class="text-gold">Prime</span>
-                    </span>
-                </div>
-                <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-neutral-300">
-                    <a href="#" class="text-white">Início</a>
-                    <a href="#" class="hover:text-white transition-colors">Cursos</a>
-                    <a href="#" class="hover:text-white transition-colors">Minha Lista</a>
-                    <a href="#" class="hover:text-white transition-colors">Novidades</a>
-                </div>
-            </div>
-            <div class="flex items-center gap-4 md:gap-6">
-                <i data-lucide="search" class="w-5 h-5 cursor-pointer hover:text-gold"></i>
-                <i data-lucide="bell" class="w-5 h-5 cursor-pointer hover:text-gold"></i>
-                <div class="group relative">
-                    <div class="w-8 h-8 md:w-10 md:h-10 rounded bg-gold/20 flex items-center justify-center cursor-pointer border border-gold/30">
-                        <i data-lucide="user" class="w-5 h-5 text-gold"></i>
-                    </div>
-                    <div class="absolute right-0 top-full mt-2 w-48 bg-netflix-dark border border-white/10 rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all py-2">
-                        <div class="px-4 py-2 border-b border-white/5 mb-2">
-                            <p class="text-sm font-bold">Corretor VIP</p>
-                            <p class="text-xs text-neutral-500">Membro Elite</p>
+    <div id="dashboard-view" class="hidden min-h-screen flex flex-col bg-netflix-black">
+        <div class="flex-grow">
+            <!-- Navbar -->
+            <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 px-4 md:px-12 h-16 flex items-center justify-between bg-black border-b border-white/5">
+                <div class="flex items-center gap-8">
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center justify-center bg-gold rounded-sm h-8 aspect-[2/3] px-1">
+                            <span class="text-black font-black text-[10px] leading-none">IP</span>
                         </div>
-                        <button onclick="logout()" class="w-full text-left px-4 py-2 text-sm hover:bg-white/5 flex items-center gap-2 text-red-400">
-                            <i data-lucide="log-out" class="w-4 h-4"></i> Sair
+                        <span class="font-display font-bold text-2xl tracking-tighter text-white">
+                            ImobiPrime
+                        </span>
+                    </div>
+                    <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-neutral-300">
+                        <a href="#" class="text-white">Início</a>
+                        <a href="#" class="hover:text-white transition-colors">Cursos</a>
+                        <a href="#" class="hover:text-white transition-colors">Minha Lista</a>
+                        <a href="#" class="hover:text-white transition-colors">Novidades</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 md:gap-6">
+                    <i data-lucide="search" class="w-5 h-5 cursor-pointer hover:text-gold"></i>
+                    <i data-lucide="bell" class="w-5 h-5 cursor-pointer hover:text-gold"></i>
+                    <div class="group relative">
+                        <div class="w-8 h-8 md:w-10 md:h-10 rounded bg-gold/20 flex items-center justify-center cursor-pointer border border-gold/30">
+                            <i data-lucide="user" class="w-5 h-5 text-gold"></i>
+                        </div>
+                        <div class="absolute right-0 top-full mt-2 w-48 bg-netflix-dark border border-white/10 rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all py-2">
+                            <div class="px-4 py-2 border-b border-white/5 mb-2">
+                                <p class="text-sm font-bold">Corretor VIP</p>
+                                <p class="text-xs text-neutral-500">Membro Elite</p>
+                            </div>
+                            <button onclick="logout()" class="w-full text-left px-4 py-2 text-sm hover:bg-white/5 flex items-center gap-2 text-red-400">
+                                <i data-lucide="log-out" class="w-4 h-4"></i> Sair
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Hero -->
+            <div class="relative min-h-[85vh] w-full overflow-hidden flex flex-col justify-start px-4 md:px-16 pb-20 md:pb-32 pt-32 md:pt-40">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80" class="absolute inset-0 w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-r from-netflix-black via-netflix-black/60 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-netflix-black via-transparent to-transparent"></div>
+                
+                <div class="relative z-10 max-w-3xl flex flex-col">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="flex items-center justify-center bg-gold rounded-sm h-5 aspect-[2/3] px-1">
+                            <span class="text-black font-black text-[10px] leading-none">IP</span>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-[0.3em] text-gold/90">Original Series</span>
+                    </div>
+                    <h1 class="text-5xl md:text-8xl font-display font-black leading-[0.9] uppercase tracking-tighter mb-6">
+                        Elite <br> <span class="text-gold">Academy</span>
+                    </h1>
+                    <p class="text-lg md:text-2xl text-neutral-300 max-w-xl leading-relaxed mb-8">
+                        Domine as estratégias exclusivas dos maiores corretores de luxo do mundo. Do atendimento personalizado ao fechamento de contratos multimilionários.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <button onclick="enterCurrentModule()" class="flex items-center gap-2 md:gap-3 bg-white text-black px-4 py-2 md:px-10 md:py-4 rounded font-bold hover:bg-white/90 transition-all text-sm md:text-xl shadow-2xl">
+                            <i data-lucide="play" class="w-4 h-4 md:w-6 md:h-6 fill-black"></i> Assistir Agora
+                        </button>
+                        <button class="flex items-center gap-2 md:gap-3 bg-neutral-500/40 text-white px-4 py-2 md:px-10 md:py-4 rounded font-bold hover:bg-neutral-500/60 transition-all text-sm md:text-xl backdrop-blur-md border border-white/10">
+                            <i data-lucide="bell" class="w-4 h-4 md:w-6 md:h-6"></i> Saiba Mais
                         </button>
                     </div>
                 </div>
             </div>
-        </nav>
 
-        <!-- Hero -->
-        <div class="relative min-h-[85vh] w-full overflow-hidden flex flex-col justify-start px-4 md:px-16 pb-20 md:pb-32 pt-[120px] md:pt-[140px]">
-            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80" class="absolute inset-0 w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-netflix-black via-netflix-black/60 to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-netflix-black via-transparent to-transparent"></div>
-            
-            <div class="relative z-10 max-w-3xl flex flex-col">
-                <div class="flex items-center gap-2 mb-4">
-                    <div class="flex items-center justify-center bg-gold rounded-sm h-5 aspect-[2/3] px-1">
-                        <span class="text-black font-black text-[10px] leading-none">IP</span>
-                    </div>
-                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-gold/90">Original Series</span>
-                </div>
-                <h1 class="text-5xl md:text-8xl font-display font-black leading-[0.9] uppercase tracking-tighter mb-6">
-                    Elite <br> <span class="text-gold">Academy</span>
-                </h1>
-                <p class="text-lg md:text-2xl text-neutral-300 max-w-xl leading-relaxed mb-8">
-                    Domine as estratégias exclusivas dos maiores corretores de luxo do mundo. Do atendimento personalizado ao fechamento de contratos multimilionários.
-                </p>
-                <div class="flex items-center gap-4">
-                    <button onclick="enterCurrentModule()" class="flex items-center gap-2 md:gap-3 bg-white text-black px-4 py-2 md:px-10 md:py-4 rounded font-bold hover:bg-white/90 transition-all text-sm md:text-xl shadow-2xl">
-                        <i data-lucide="play" class="w-4 h-4 md:w-6 md:h-6 fill-black"></i> Assistir Agora
-                    </button>
-                    <button class="flex items-center gap-2 md:gap-3 bg-neutral-500/40 text-white px-4 py-2 md:px-10 md:py-4 rounded font-bold hover:bg-neutral-500/60 transition-all text-sm md:text-xl backdrop-blur-md border border-white/10">
-                        <i data-lucide="bell" class="w-4 h-4 md:w-6 md:h-6"></i> Saiba Mais
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modules -->
-        <div class="px-4 md:px-12 mt-20 relative z-10 space-y-16 pb-10">
-            <div class="space-y-6 mb-10">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-3">
-                        <span class="w-1 h-8 bg-gold rounded-full"></span> Trilha de Especialização
-                    </h2>
-                    <div class="flex gap-2">
-                        <button onclick="scrollCarousel('left')" class="p-3 rounded-full bg-black/40 hover:bg-black/60 border border-white/10 transition-colors"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
-                        <button onclick="scrollCarousel('right')" class="p-3 rounded-full bg-black/40 hover:bg-black/60 border border-white/10 transition-colors"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
-                    </div>
-                </div>
-                <div id="modules-carousel" class="flex gap-4 overflow-x-auto no-scrollbar pb-8 scroll-smooth">
-                    <!-- Modules injected here -->
-                </div>
-            </div>
-
-            <!-- Certificate Section -->
-            <div class="py-12 border-t border-white/5">
-                <div class="bg-netflix-dark/50 rounded-2xl p-8 md:p-16 flex flex-col md:flex-row items-center justify-between gap-12 border border-white/5 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-gold/10 transition-all duration-1000"></div>
-                    <div class="relative z-10 space-y-6 text-center md:text-left">
-                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 border border-gold/20 text-gold text-xs font-bold uppercase tracking-widest">
-                            <i data-lucide="award" class="w-4 h-4"></i> Reconhecimento Profissional
-                        </div>
-                        <h2 class="text-4xl md:text-5xl font-display font-bold leading-tight">Seu Certificado <br> <span class="text-gold">ImobiPrime</span></h2>
-                        <p class="text-neutral-400 max-w-xl text-lg">
-                            Ao concluir todos os 7 módulos da nossa academia, você receberá o selo de Corretor VIP, validando sua expertise no mercado imobiliário de luxo.
-                        </p>
-                        <div id="certificate-status" class="flex items-center justify-center md:justify-start gap-2 text-sm text-neutral-500 font-medium">
-                            <i data-lucide="lock" class="w-4 h-4"></i>
-                            <span id="progress-text">Conclua todos os módulos para desbloquear (0/7)</span>
+            <!-- Modules -->
+            <div class="px-4 md:px-12 mt-20 relative z-10 space-y-16 pb-10">
+                <div class="space-y-6 mb-10">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-3">
+                            <span class="w-1 h-8 bg-gold rounded-full"></span> Trilha de Especialização
+                        </h2>
+                        <div class="flex gap-2">
+                            <button onclick="scrollCarousel('left')" class="p-3 rounded-full bg-black/40 hover:bg-black/60 border border-white/10 transition-colors"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+                            <button onclick="scrollCarousel('right')" class="p-3 rounded-full bg-black/40 hover:bg-black/60 border border-white/10 transition-colors"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
                         </div>
                     </div>
-                    <div class="relative z-10 group w-full flex justify-center md:justify-end">
-                        <div id="certificate-glow" class="absolute -inset-1 bg-gradient-to-r from-gold to-yellow-600 rounded-lg blur opacity-25 group-hover:opacity-60 transition duration-1000 hidden"></div>
-                        <button id="certificate-btn" disabled onclick="openCertificate()" class="relative flex items-center justify-center gap-3 px-6 py-3 md:px-12 md:py-6 rounded-lg font-black text-sm md:text-xl uppercase tracking-tighter transition-all w-full max-w-[280px] md:max-w-none bg-neutral-800 text-neutral-500 cursor-not-allowed">
-                            <i data-lucide="award" class="w-5 h-5 md:w-7 md:h-7"></i> Gerar Certificado
-                        </button>
+                    <div id="modules-carousel" class="flex gap-4 overflow-x-auto no-scrollbar pb-8 scroll-smooth">
+                        <!-- Modules injected here -->
+                    </div>
+                </div>
+
+                <!-- Certificate Section -->
+                <div class="py-12 border-t border-white/5">
+                    <div class="bg-netflix-dark/50 rounded-2xl p-8 md:p-16 flex flex-col md:flex-row items-center justify-between gap-12 border border-white/5 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-gold/10 transition-all duration-1000"></div>
+                        <div class="relative z-10 space-y-6 text-center md:text-left">
+                            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 border border-gold/20 text-gold text-xs font-bold uppercase tracking-widest">
+                                <i data-lucide="award" class="w-4 h-4"></i> Reconhecimento Profissional
+                            </div>
+                            <h2 class="text-4xl md:text-5xl font-display font-bold leading-tight">Seu Certificado <br> <span class="text-gold">ImobiPrime</span></h2>
+                            <p class="text-neutral-400 max-w-xl text-lg">
+                                Ao concluir todos os 7 módulos da nossa academia, você receberá o selo de Corretor VIP, validando sua expertise no mercado imobiliário de luxo.
+                            </p>
+                            <div id="certificate-status" class="flex items-center justify-center md:justify-start gap-2 text-sm text-neutral-500 font-medium">
+                                <i data-lucide="lock" class="w-4 h-4"></i>
+                                <span id="progress-text">Conclua todos os módulos para desbloquear (0/7)</span>
+                            </div>
+                        </div>
+                        <div class="relative z-10 group w-full flex justify-center md:justify-end">
+                            <div id="certificate-glow" class="absolute -inset-1 bg-gradient-to-r from-gold to-yellow-600 rounded-lg blur opacity-25 group-hover:opacity-60 transition duration-1000 hidden"></div>
+                            <button id="certificate-btn" disabled onclick="openCertificate()" class="relative flex items-center justify-center gap-3 px-6 py-3 md:px-12 md:py-6 rounded-lg font-black text-sm md:text-xl uppercase tracking-tighter transition-all w-full max-w-[280px] md:max-w-none bg-neutral-800 text-neutral-500 cursor-not-allowed">
+                                <i data-lucide="award" class="w-5 h-5 md:w-7 md:h-7"></i> Gerar Certificado
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -210,67 +215,69 @@
     </div>
 
     <!-- PLAYER VIEW -->
-    <div id="player-view" class="hidden min-h-fit bg-netflix-black pt-16 pb-0 mb-0">
-        <nav class="fixed top-0 w-full z-40 bg-black border-b border-white/5 px-4 md:px-12 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-2 md:gap-4">
-                <button onclick="showDashboard()" class="p-1.5 md:p-2 hover:bg-white/5 rounded-full transition-colors">
-                    <i data-lucide="arrow-left" class="w-5 h-5 md:w-6 md:h-6"></i>
-                </button>
-                <div class="flex items-center gap-2">
-                    <div class="flex items-center justify-center bg-gold rounded-sm h-5 md:h-6 aspect-[2/3] px-1">
-                        <span class="text-black font-black text-[10px] leading-none">IP</span>
-                    </div>
-                    <span class="font-display font-bold text-xl md:text-2xl tracking-tighter text-white">Imobi<span class="text-gold">Prime</span></span>
-                </div>
-            </div>
-            <div class="flex items-center gap-4">
-                <button onclick="completeModule()" class="flex items-center gap-2 bg-gold text-black px-3 py-1.5 md:px-4 md:py-2 rounded font-bold hover:bg-gold/90 transition-all shadow-lg shadow-gold/20 text-[10px] md:text-sm">
-                    <i data-lucide="check-circle" class="w-3 h-3 md:w-4 md:h-4"></i> Finalizar Aula
-                </button>
-            </div>
-        </nav>
-
-        <div class="flex flex-col lg:flex-row gap-0 lg:gap-8 p-0 lg:p-8 max-w-[1600px] mx-auto">
-            <div class="flex-1 lg:w-[70%] space-y-8 px-4 lg:px-0">
-                <div class="aspect-video w-full bg-neutral-900 rounded-none lg:rounded-xl overflow-hidden shadow-2xl border border-white/5 mt-4 lg:mt-0">
-                    <iframe id="video-frame" src="" class="w-full h-full aspect-video" allowfullscreen></iframe>
-                </div>
-                <div class="space-y-6">
-                    <div class="space-y-2">
-                        <h1 id="player-title" class="text-2xl md:text-4xl font-display font-bold"></h1>
-                        <div class="flex items-center gap-4 text-neutral-400">
-                            <span id="player-module-id" class="text-gold font-bold text-sm md:text-base"></span>
-                            <span>•</span>
-                            <span class="text-sm md:text-base">40 min</span>
+    <div id="player-view" class="hidden min-h-screen flex flex-col bg-netflix-black pt-16">
+        <div class="flex-grow">
+            <nav class="fixed top-0 w-full z-40 bg-black border-b border-white/5 px-4 md:px-12 h-16 flex items-center justify-between">
+                <div class="flex items-center gap-2 md:gap-4">
+                    <button onclick="showDashboard()" class="p-1.5 md:p-2 hover:bg-white/5 rounded-full transition-colors">
+                        <i data-lucide="arrow-left" class="w-5 h-5 md:w-6 md:h-6"></i>
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center justify-center bg-gold rounded-sm h-5 md:h-6 aspect-[2/3] px-1">
+                            <span class="text-black font-black text-[10px] leading-none">IP</span>
                         </div>
+                        <span class="font-display font-bold text-xl md:text-2xl tracking-tighter text-white">ImobiPrime</span>
                     </div>
-                    <div class="pt-8 border-t border-white/5 space-y-8">
-                        <h3 class="text-lg md:text-xl font-bold flex items-center gap-2">
-                            <i data-lucide="message-square" class="w-5 h-5 text-gold"></i> Dúvidas do Corretor
-                        </h3>
-                        <div class="flex gap-4">
-                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gold/20 flex items-center justify-center border border-gold/30 flex-shrink-0">
-                                <i data-lucide="user" class="w-4 h-4 md:w-5 md:h-5 text-gold"></i>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button onclick="completeModule()" class="flex items-center gap-2 bg-gold text-black px-3 py-1.5 md:px-4 md:py-2 rounded font-bold hover:bg-gold/90 transition-all shadow-lg shadow-gold/20 text-[10px] md:text-sm">
+                        <i data-lucide="check-circle" class="w-3 h-3 md:w-4 md:h-4"></i> Finalizar Aula
+                    </button>
+                </div>
+            </nav>
+
+            <div class="flex flex-col lg:flex-row gap-0 lg:gap-8 p-0 lg:p-8 max-w-[1600px] mx-auto">
+                <div class="flex-1 lg:w-[70%] space-y-8 px-[13px] lg:px-0">
+                    <div class="aspect-video w-full bg-neutral-900 rounded-none lg:rounded-xl overflow-hidden shadow-2xl border border-white/5 mt-4 lg:mt-0">
+                        <iframe id="video-frame" src="" class="w-full h-full aspect-video" allowfullscreen allow="autoplay; fullscreen"></iframe>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="space-y-2">
+                            <h1 id="player-title" class="text-2xl md:text-4xl font-display font-bold"></h1>
+                            <div class="flex items-center gap-4 text-neutral-400">
+                                <span id="player-module-id" class="text-gold font-bold text-sm md:text-base"></span>
+                                <span>•</span>
+                                <span class="text-sm md:text-base">40 min</span>
                             </div>
-                            <div class="flex-1 space-y-2">
-                                <textarea placeholder="Escreva sua dúvida..." class="w-full bg-neutral-800 border border-white/10 rounded-lg p-3 md:p-4 focus:ring-1 focus:ring-gold outline-none transition-all resize-none h-24 text-sm md:text-base"></textarea>
-                                <div class="flex justify-end">
-                                    <button class="flex items-center gap-2 bg-gold text-black hover:bg-gold/90 px-4 py-2 md:px-6 md:py-2 rounded font-bold transition-all text-sm md:text-base">
-                                        <i data-lucide="send" class="w-4 h-4"></i> Enviar Dúvida
-                                    </button>
+                        </div>
+                        <div class="pt-8 border-t border-white/5 space-y-8">
+                            <h3 class="text-lg md:text-xl font-bold flex items-center gap-2">
+                                <i data-lucide="message-square" class="w-5 h-5 text-gold"></i> Dúvidas do Corretor
+                            </h3>
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gold/20 flex items-center justify-center border border-gold/30 flex-shrink-0">
+                                    <i data-lucide="user" class="w-4 h-4 md:w-5 md:h-5 text-gold"></i>
+                                </div>
+                                <div class="flex-1 space-y-2">
+                                    <textarea placeholder="Escreva sua dúvida..." class="w-full bg-neutral-800 border border-white/10 rounded-lg p-3 md:p-4 focus:ring-1 focus:ring-gold outline-none transition-all resize-none h-24 text-sm md:text-base"></textarea>
+                                    <div class="flex justify-end">
+                                        <button class="flex items-center gap-2 bg-gold text-black hover:bg-gold/90 px-4 py-2 md:px-6 md:py-2 rounded font-bold transition-all text-sm md:text-base">
+                                            <i data-lucide="send" class="w-4 h-4"></i> Enviar Dúvida
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                            <div id="comments-list" class="space-y-6"></div>
                         </div>
-                        <div id="comments-list" class="space-y-6"></div>
                     </div>
                 </div>
-            </div>
-            <div class="lg:w-[30%] bg-netflix-dark/50 lg:bg-netflix-dark/30 rounded-xl p-4 md:p-6 border-t lg:border border-white/5">
-                <div class="sticky top-28 space-y-6">
-                    <h3 class="text-base md:text-lg font-bold uppercase tracking-widest text-neutral-500 flex items-center gap-2">
-                        <i data-lucide="play" class="w-4 h-4 text-gold"></i> Conteúdo do Curso
-                    </h3>
-                    <div id="sidebar-modules" class="space-y-4"></div>
+                <div class="lg:w-[30%] bg-netflix-dark/50 lg:bg-netflix-dark/30 rounded-xl p-4 md:p-6 border-t lg:border border-white/5">
+                    <div class="sticky top-28 space-y-6">
+                        <h3 class="text-base md:text-lg font-bold uppercase tracking-widest text-neutral-500 flex items-center gap-2">
+                            <i data-lucide="play" class="w-4 h-4 text-gold"></i> Conteúdo do Curso
+                        </h3>
+                        <div id="sidebar-modules" class="space-y-4"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -285,13 +292,11 @@
             </button>
             <div class="relative flex flex-col items-center text-center space-y-6 md:space-y-8">
                 <div class="flex items-center gap-3 mb-4">
-                    <svg viewBox="0 0 100 100" class="h-12 md:h-16 w-auto fill-gold">
-                        <path d="M50 10 L90 35 L90 85 L10 85 L10 35 Z" fill="none" stroke="currentColor" stroke-width="5" />
-                        <path d="M50 20 L80 40 L80 75 L20 75 L20 40 Z" />
-                        <rect x="42" y="55" width="16" height="20" fill="currentColor" />
-                    </svg>
+                    <div class="flex items-center justify-center bg-gold rounded-sm h-12 md:h-16 aspect-[2/3] px-1">
+                        <span class="text-black font-black text-sm md:text-base leading-none">IP</span>
+                    </div>
                     <div class="text-left">
-                        <h1 class="font-display font-bold text-2xl md:text-3xl tracking-tighter">Imobi<span class="text-gold">Prime</span></h1>
+                        <h1 class="font-display font-bold text-2xl md:text-3xl tracking-tighter">ImobiPrime</h1>
                         <p class="text-[8px] md:text-[10px] uppercase tracking-[0.3em] font-bold text-neutral-500">Academy Excellence</p>
                     </div>
                 </div>
@@ -330,7 +335,7 @@
 
     <!-- SHARED FOOTER TEMPLATE -->
     <template id="footer-template">
-        <footer class="mt-10 md:mt-20 px-4 md:px-12 py-6 pb-0 mb-0 border-t border-white/5 text-neutral-500">
+        <footer class="mt-10 md:mt-20 px-4 md:px-12 py-6 pb-0 mb-0 border-t border-white/5 text-neutral-500 bg-netflix-black">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
                 <div class="space-y-4 md:space-y-6">
                     <h4 class="text-white font-bold text-base md:text-lg">Plataforma</h4>
@@ -361,7 +366,7 @@
                         <div class="flex items-center justify-center bg-gold rounded-sm h-6 aspect-[2/3] px-1">
                             <span class="text-black font-black text-[8px] leading-none">IP</span>
                         </div>
-                        <span class="font-display font-bold text-lg tracking-tighter text-white">Imobi<span class="text-gold">Prime</span></span>
+                        <span class="font-display font-bold text-lg tracking-tighter text-white">ImobiPrime</span>
                     </div>
                     <p class="text-[10px] md:text-xs leading-relaxed max-w-xs">
                         © 2026 ImobiPrime Academy. Todos os direitos reservados. A maior rede de imóveis de luxo do país.
@@ -374,13 +379,13 @@
     <script>
         // --- Data ---
         const MODULES_DATA = [
-            { id: 1, title: "Introdução ao Mercado de Luxo", description: "Entenda os pilares do atendimento de alto padrão.", thumbnail: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-            { id: 2, title: "Prospecção de Clientes", description: "Estratégias avançadas para investidores qualificados.", thumbnail: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-            { id: 3, title: "Técnicas de Negociação", description: "A arte de fechar negócios milionários.", thumbnail: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&w=800&q=80", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-            { id: 4, title: "Documentação Imobiliária", description: "Segurança jurídica em transações de alto valor.", thumbnail: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=80", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-            { id: 5, title: "Marketing Digital", description: "Posicionamento de marca pessoal premium.", thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-            { id: 6, title: "Fechamento de Contrato", description: "O passo a passo final para a satisfação.", thumbnail: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=800&q=80", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-            { id: 7, title: "Pós-venda", description: "Fidelização e networking de elite.", thumbnail: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+            { id: 1, title: "Introdução ao Mercado de Luxo", description: "Entenda os pilares do atendimento de alto padrão.", thumbnail: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80", videoId: "dQw4w9WgXcQ" },
+            { id: 2, title: "Prospecção de Clientes", description: "Estratégias avançadas para investidores qualificados.", thumbnail: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80", videoId: "dQw4w9WgXcQ" },
+            { id: 3, title: "Técnicas de Negociação", description: "A arte de fechar negócios milionários.", thumbnail: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&w=800&q=80", videoId: "dQw4w9WgXcQ" },
+            { id: 4, title: "Documentação Imobiliária", description: "Segurança jurídica em transações de alto valor.", thumbnail: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=80", videoId: "dQw4w9WgXcQ" },
+            { id: 5, title: "Marketing Digital", description: "Posicionamento de marca pessoal premium.", thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80", videoId: "dQw4w9WgXcQ" },
+            { id: 6, title: "Fechamento de Contrato", description: "O passo a passo final para a satisfação.", thumbnail: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=800&q=80", videoId: "dQw4w9WgXcQ" },
+            { id: 7, title: "Pós-venda", description: "Fidelização e networking de elite.", thumbnail: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", videoId: "dQw4w9WgXcQ" },
         ];
 
         const COMMENTS = [
@@ -443,10 +448,10 @@
             container.innerHTML = MODULES_DATA.map(m => {
                 const isUnlocked = m.id === 1 || completedModules.includes(m.id - 1);
                 const isCompleted = completedModules.includes(m.id);
-                const hoverClass = isUnlocked ? 'card-unlocked' : 'card-locked';
+                const cardClass = isUnlocked ? 'card-unlocked' : 'card-locked';
                 
                 return `
-                    <div onclick="${isUnlocked ? `enterModule(${m.id})` : ''}" class="relative flex-shrink-0 w-72 md:w-80 aspect-video rounded-md overflow-hidden cursor-pointer group ${hoverClass}">
+                    <div onclick="${isUnlocked ? `enterModule(${m.id})` : ''}" class="relative flex-shrink-0 w-72 md:w-80 aspect-video rounded-md overflow-hidden group ${cardClass}">
                         <img src="${m.thumbnail}" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-4">
                             <div class="flex items-center justify-between mb-1">
@@ -455,7 +460,42 @@
                             </div>
                             <h3 class="text-sm font-bold leading-tight group-hover:text-gold transition-colors">${m.title}</h3>
                         </div>
-                        ${!isUnlocked ? '<div class="absolute inset-0 flex items-center justify-center bg-black/40"><i data-lucide="lock" class="w-8 h-8 text-white/50"></i></div>' : ''}
+                        ${!isUnlocked ? `
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/40">
+                                <i data-lucide="lock" class="w-8 h-8 text-white/50"></i>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        function renderSidebar(currentId) {
+            const container = document.getElementById('sidebar-modules');
+            container.innerHTML = MODULES_DATA.map(sm => {
+                const isCompleted = completedModules.includes(sm.id);
+                const isCurrent = sm.id === currentId;
+                const isUnlocked = sm.id === 1 || completedModules.includes(sm.id - 1);
+                const cardClass = isUnlocked ? 'card-unlocked' : 'card-locked';
+
+                return `
+                    <div onclick="${isUnlocked ? `enterModule(${sm.id})` : ''}" class="flex gap-3 md:gap-4 p-2 md:p-3 rounded-lg transition-all border ${isCurrent ? 'bg-gold/10 border-gold/30' : 'border-transparent hover:bg-white/5'} ${cardClass} ${!isUnlocked ? 'cursor-not-allowed' : 'cursor-pointer'}">
+                        <div class="relative w-20 md:w-28 aspect-video rounded overflow-hidden flex-shrink-0">
+                            <img src="${sm.thumbnail}" class="w-full h-full object-cover">
+                            ${!isUnlocked ? `
+                                <div class="absolute inset-0 flex items-center justify-center bg-black/40">
+                                    <i data-lucide="lock" class="w-4 h-4 text-white"></i>
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="flex-1 min-w-0 flex flex-col justify-center">
+                            <div class="flex items-center justify-between gap-2">
+                                <p class="text-[9px] md:text-[10px] font-bold text-neutral-500 uppercase">Módulo ${sm.id}</p>
+                                ${isCompleted ? '<i data-lucide="check-circle" class="w-2.5 h-2.5 text-gold"></i>' : ''}
+                            </div>
+                            <h4 class="text-xs md:text-sm font-bold truncate ${isCurrent ? 'text-gold' : 'text-white'}">${sm.title}</h4>
+                        </div>
                     </div>
                 `;
             }).join('');
@@ -467,7 +507,9 @@
             const m = MODULES_DATA.find(x => x.id === id);
             document.getElementById('player-title').textContent = m.title;
             document.getElementById('player-module-id').textContent = `Módulo ${m.id}`;
-            document.getElementById('video-frame').src = m.videoUrl;
+            
+            // Correct Embed Format: rel=0, enablejsapi=1, autoplay=0
+            document.getElementById('video-frame').src = `https://www.youtube.com/embed/${m.videoId}?rel=0&enablejsapi=1&autoplay=0`;
             
             // Render comments
             document.getElementById('comments-list').innerHTML = COMMENTS.map(c => `
@@ -485,29 +527,8 @@
                 </div>
             `).join('');
 
-            // Render sidebar
-            document.getElementById('sidebar-modules').innerHTML = MODULES_DATA.map(sm => {
-                const isCompleted = completedModules.includes(sm.id);
-                const isCurrent = sm.id === id;
-                const isUnlocked = sm.id === 1 || completedModules.includes(sm.id - 1);
-                return `
-                    <div onclick="${isUnlocked ? `enterModule(${sm.id})` : ''}" class="flex gap-3 md:gap-4 p-2 md:p-3 rounded-lg transition-all border ${isCurrent ? 'bg-gold/10 border-gold/30' : 'border-transparent hover:bg-white/5'} ${!isUnlocked ? 'opacity-40 grayscale cursor-not-allowed' : 'cursor-pointer'}">
-                        <div class="relative w-20 md:w-28 aspect-video rounded overflow-hidden flex-shrink-0">
-                            <img src="${sm.thumbnail}" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex-1 min-w-0 flex flex-col justify-center">
-                            <div class="flex items-center justify-between gap-2">
-                                <p class="text-[9px] md:text-[10px] font-bold text-neutral-500 uppercase">Módulo ${sm.id}</p>
-                                ${isCompleted ? '<i data-lucide="check-circle" class="w-2.5 h-2.5 text-gold"></i>' : ''}
-                            </div>
-                            <h4 class="text-xs md:text-sm font-bold truncate ${isCurrent ? 'text-gold' : 'text-white'}">${sm.title}</h4>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
+            renderSidebar(id);
             showView('player-view');
-            lucide.createIcons();
         }
 
         function completeModule() {
@@ -515,6 +536,9 @@
                 completedModules.push(activeModuleId);
                 localStorage.setItem('imobi_progress', JSON.stringify(completedModules));
             }
+            renderModules();
+            renderSidebar(activeModuleId);
+            updateCertificateStatus();
             showDashboard();
         }
 
@@ -558,6 +582,7 @@
         function renderFooters() {
             const template = document.getElementById('footer-template');
             document.querySelectorAll('footer-component').forEach(el => {
+                el.innerHTML = '';
                 el.appendChild(template.content.cloneNode(true));
             });
         }
